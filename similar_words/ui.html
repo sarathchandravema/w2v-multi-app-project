@@ -1,0 +1,20 @@
+<!-- ui/index.html -->
+<form id="queryForm">
+    <input type="text" id="wordInput" placeholder="Enter a word" />
+    <button type="submit">Search</button>
+  </form>
+  <ul id="results"></ul>
+  
+  <script>
+    document.getElementById('queryForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const word = document.getElementById('wordInput').value;
+      const res = await fetch(`http://localhost:5001/similar?word=${word}`)
+      const data = await res.json();
+      document.getElementById('results').innerHTML = Object.entries(data).map(
+  ([word, score]) => `<li>${word}: ${score.toFixed(4)}</li>`
+).join('');
+
+    });
+  </script>
+  
