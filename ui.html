@@ -2,7 +2,10 @@
 <form id="queryForm">
     <input type="text" id="wordInput" placeholder="Enter a word" />
     <input type="text" id="topInput" placeholder="Enter top records" />
-    <input type="text" id="modelInput" placeholder="Enter model" />
+    <select id="modelInput" placeholder="Select a model">
+        <option value="small">Custom Model</option>
+        <option value="medium">Default Model</option>
+    </select>
     <button type="submit">Search</button>
   </form>
   <ul id="results"></ul>

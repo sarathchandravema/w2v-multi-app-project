@@ -7,6 +7,10 @@ Working first draft of multiple apps.
 
 * two apps under model category for routing to specific model's app.
     
-    `flask --app app-model1\model1.py run --port=5000` => `http://127.0.0.1:5000/model?word=<word>&topn=<topn>`
+    via local: `flask --app app-model1\model1.py run --port=5000` => `http://127.0.0.1:5000/model?word=<word>&topn=<topn>`
+
+    via docker: 
+        `docker build --tag app-m1 app-model1`
+        `docker run -p 5000:5000 app-m1`
     
     `flask --app app-model2\model2.py run --port=5001` => `http://127.0.0.1:5001/model?word=<_word>&topn=<_topn>`
