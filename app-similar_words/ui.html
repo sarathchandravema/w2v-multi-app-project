@@ -1,6 +1,8 @@
 <!-- ui/index.html -->
 <form id="queryForm">
     <input type="text" id="wordInput" placeholder="Enter a word" />
+    <input type="text" id="topInput" placeholder="Enter top records" />
+    <input type="text" id="modelInput" placeholder="Enter model" />
     <button type="submit">Search</button>
   </form>
   <ul id="results"></ul>
@@ -9,7 +11,9 @@
     document.getElementById('queryForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const word = document.getElementById('wordInput').value;
-      const res = await fetch(`http://localhost:5001/similar?word=${word}`)
+      const top = document.getElementById('topInput').value;
+      const model = document.getElementById('modelInput').value;
+      const res = await fetch(`http://localhost:5002/similar?word=${word}&topn=${top}&model=${model}`);
       const data = await res.json();
       document.getElementById('results').innerHTML = Object.entries(data).map(
   ([word, score]) => `<li>${word}: ${score.toFixed(4)}</li>`
