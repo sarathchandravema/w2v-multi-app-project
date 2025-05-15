@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 import common_functions as cf
 
 st.title("Similarity Search")
@@ -85,7 +86,10 @@ if st.session_state.page == "results":
     st.number_input("Number of similar words", min_value=1, max_value=300, value=10, step=1, key="topn", disabled=True)
     st.radio("Select a model", ("small", "medium"), key="model", disabled=True)
 
-    st.write(cf.sample_function(st.session_state.word))
+    fetched_words = cf.get_similar_words(st.session_state.word, st.session_state.topn, st.session_state.model)
+
+    # st.write(cf.sample_function(st.session_state.word))
+    st.write(pd.DataFrame(fetched_words, columns=["Word", "Similarity"]))
     st.button("Back to Home", on_click=back_to_home, key="back_button")
 
 # else:

@@ -10,7 +10,7 @@ def get_similars():
     _word = request.args.get('word')
     _topn = request.args.get('topn', type=int, default=10)
     
-    print(f"Using glove-twiter-50 => word:{_word} ; _topn:{_topn}")
+    print(f"Using glove-twitter-50 => word:{_word} ; _topn:{_topn}")
     
     if _word:
         # Process the word (e.g., find similar words)

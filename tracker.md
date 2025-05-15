@@ -14,3 +14,5 @@ Working first draft of multiple apps.
         `docker run -p 5000:5000 app-m1`
     
     `flask --app app-model2\model2.py run --port=5001` => `http://127.0.0.1:5001/model?word=<_word>&topn=<_topn>`
+
+* Two different UI's are built, one for API based application, the other for Streamlit based. Streamlit is used to host in the server, which can be used to link in github.
