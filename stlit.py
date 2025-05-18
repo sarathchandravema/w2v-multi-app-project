@@ -2,8 +2,8 @@ import streamlit as st
 import pandas as pd
 import common_functions as cf
 
-st.set_page_config(page_title="Similarity Search", page_icon=":mag:")
-st.title("Similarity Search")
+st.set_page_config(page_title="Word Vector Search", page_icon=":mag:")
+st.title("Word Vector Search")
 
 
 if "page" not in st.session_state:
