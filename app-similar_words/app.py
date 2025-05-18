@@ -4,13 +4,6 @@ import requests
 
 similars_app = Flask(__name__)
 
-def get_model(model_name):
-    match model_name:
-        case "custom":
-            return "glove-twitter-50"
-        case _:
-            return "glove-twitter-25"
-
 
 @similars_app.route('/similar', methods=['GET'])
 def get_similars():
@@ -22,7 +15,7 @@ def get_similars():
     print(f"word:{_word} ; _topn:{_topn}")
 
     match _model:
-        case "custom":
+        case "small":
             extract = requests.get(f'http://127.0.0.1:5000/model?word={_word}&topn={_topn}')
             if extract.status_code == 200:
                 response = make_response(jsonify(extract.json()), 200)
@@ -32,8 +25,18 @@ def get_similars():
                 response = make_response("Error fetching data from model1", 500)
                 response.headers['Access-Control-Allow-Origin'] = '*'
                 return response
-        case _:
+        case "medium":
             extract = requests.get(f'http://127.0.0.1:5001/model?word={_word}&topn={_topn}')
+            if extract.status_code == 200:
+                response = make_response(jsonify(extract.json()), 200)
+                response.headers['Access-Control-Allow-Origin'] = '*'
+                return response
+            else:
+                response = make_response("Error fetching data from model1", 500)
+                response.headers['Access-Control-Allow-Origin'] = '*'
+                return response
+        case _:
+            extract = requests.get(f'http://127.0.0.1:5000/model?word={_word}&topn={_topn}')
             if extract.status_code == 200:
                 response = make_response(jsonify(extract.json()), 200)
                 response.headers['Access-Control-Allow-Origin'] = '*'
