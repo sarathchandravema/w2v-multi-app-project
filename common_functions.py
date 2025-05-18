@@ -43,9 +43,13 @@ def get_similar_words(word, topn, model_name):
         model = gensim_loader.load("glove-twitter-25")
         
     # fetch similar words
-    similar_words = model.most_similar(word.lower(), topn=topn)
-
-    return create_df(similar_words)
+    try:
+        similar_words = model.most_similar(word.lower(), topn=topn)
+        return create_df(similar_words), 100
+    except KeyError:
+        similar_words = []
+        return create_df(similar_words), 101
+    
 
 
 def get_analogy_words(word1, word2, word3, topn, model_name):
@@ -72,6 +76,9 @@ def get_analogy_words(word1, word2, word3, topn, model_name):
         model = gensim_loader.load("glove-twitter-25")
         
     # fetch analogy words
-    analogy_words = model.most_similar(positive=[word1.lower(), word3.lower()], negative=[word2.lower()], topn=topn)
-
-    return create_df(analogy_words)
+    try:
+        analogy_words = model.most_similar(positive=[word1.lower(), word3.lower()], negative=[word2.lower()], topn=topn)
+        return create_df(analogy_words), 100
+    except KeyError:
+        analogy_words = []
+        return create_df(analogy_words), 101

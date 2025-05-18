@@ -73,8 +73,14 @@ if st.session_state.page == "similar_results":
     st.number_input("Number of similar words", min_value=1, max_value=30, value=10, step=1, key="topn", disabled=True)
     st.radio("Select a model", ("small", "medium"), key="model", disabled=True)
     
-    fetched_words = cf.get_similar_words(st.session_state.word, st.session_state.topn, st.session_state.model)
-    st.write(fetched_words)
+    fetched_words, code = cf.get_similar_words(st.session_state.word, st.session_state.topn, st.session_state.model)
+    if code == 100:
+        st.write(fetched_words)
+    elif code == 101:
+        st.write("Word not found in the model vocabulary.")
+    else:
+        st.write("An error occurred while fetching similar words.")
+        
     st.button("Back to Home", on_click=back_to_home, key="back_button")
     st.button("Get Analogy Words", on_click=go_to_page, args=("analogy",), key="analogies_button") ##check if it works
 
@@ -127,11 +133,20 @@ if st.session_state.page == "analogy_results":
     col3.text_input("Given Word 3", key="out_analogy_word3", value=st.session_state.analogy_word3, disabled=True)
     int3.write(":")
 
-    fetched_words = cf.get_analogy_words(
+    fetched_words, code = cf.get_analogy_words(
         st.session_state.analogy_word1, st.session_state.analogy_word2, st.session_state.analogy_word3,
           st.session_state.analogy_topn, st.session_state.analogy_model)
     
-    col4.text_input("Result", key="out_result_word", value=fetched_words['Word'][1], disabled=True)
+    if code == 100:
+        st.write(fetched_words)
+        col4.text_input("Result", key="out_result_word", value=fetched_words['Word'][1], disabled=True)
+    elif code == 101:
+        st.write("One of the words not found in the model vocabulary.")
+        col4.text_input("Result", key="out_result_word", value="", disabled=True)
+    else:
+        st.write("An error occurred while fetching similar words.")
+        col4.text_input("Result", key="out_result_word", value="", disabled=True)
+    
     st.write(fetched_words)
 
 
